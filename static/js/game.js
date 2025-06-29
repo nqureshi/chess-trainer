@@ -31,6 +31,12 @@ class EndgameTrainer {
             }
         });
         
+        $('#hint-btn').on('click', () => {
+            if (this.currentGameId) {
+                this.showHint();
+            }
+        });
+        
         $('#undo-btn').on('click', () => {
             if (this.currentGameId) {
                 this.undoMove();
@@ -143,6 +149,7 @@ class EndgameTrainer {
                 this.enableGameControls();
                 this.showMessage('Position started! Make your move.', 'success');
                 this.evaluatePosition(); // Auto-evaluate starting position
+                this.clearHint(); // Clear any previous hints
                 
                 $('#game-result').empty();
             } else {
@@ -192,6 +199,7 @@ class EndgameTrainer {
                 } else {
                     this.updateTurnIndicator();
                     this.evaluatePosition(); // Auto-evaluate after each move
+                    this.clearHint(); // Clear hint after move
                 }
             } else {
                 // Undo the move
@@ -218,6 +226,7 @@ class EndgameTrainer {
                 this.updateTurnIndicator();
                 this.showMessage('Position reset!', 'success');
                 this.evaluatePosition(); // Auto-evaluate after reset
+                this.clearHint(); // Clear any previous hints
                 $('#game-result').empty();
             } else {
                 this.showMessage('Failed to reset: ' + data.error, 'error');
@@ -244,6 +253,22 @@ class EndgameTrainer {
             }
         } catch (error) {
             this.showMessage('Error undoing move: ' + error.message, 'error');
+        }
+    }
+    
+    async showHint() {
+        try {
+            const response = await fetch(`/api/hint/${this.currentGameId}`);
+            const data = await response.json();
+            
+            if (data.success) {
+                this.displayHint(data);
+                this.showMessage('Hint revealed!', 'info');
+            } else {
+                this.showMessage('Cannot get hint: ' + data.error, 'error');
+            }
+        } catch (error) {
+            this.showMessage('Error getting hint: ' + error.message, 'error');
         }
     }
     
@@ -280,11 +305,11 @@ class EndgameTrainer {
     }
     
     enableGameControls() {
-        $('#undo-btn, #reset-btn').prop('disabled', false);
+        $('#hint-btn, #undo-btn, #reset-btn').prop('disabled', false);
     }
     
     disableGameControls() {
-        $('#undo-btn, #reset-btn').prop('disabled', true);
+        $('#hint-btn, #undo-btn, #reset-btn').prop('disabled', true);
     }
     
     handleGameOver(result) {
@@ -316,6 +341,39 @@ class EndgameTrainer {
         }
         
         evalDiv.text(evalText);
+    }
+    
+    displayHint(hintData) {
+        const hintDiv = $('#hint-display');
+        let hintText = `💡 Best move: ${hintData.best_move_san}`;
+        
+        // Add evaluation change info if available
+        if (hintData.current_evaluation && hintData.evaluation_after_move) {
+            const currentEval = this.formatEvaluation(hintData.current_evaluation);
+            const afterEval = this.formatEvaluation(hintData.evaluation_after_move);
+            hintText += ` (${currentEval} → ${afterEval})`;
+        }
+        
+        hintDiv.html(`<strong>${hintText}</strong>`);
+        
+        // Clear hint after 10 seconds
+        setTimeout(() => {
+            hintDiv.empty();
+        }, 10000);
+    }
+    
+    formatEvaluation(evaluation) {
+        if (evaluation.type === 'cp') {
+            const score = evaluation.value / 100;
+            return `${score > 0 ? '+' : ''}${score.toFixed(1)}`;
+        } else if (evaluation.type === 'mate') {
+            return `M${evaluation.value}`;
+        }
+        return 'Unknown';
+    }
+    
+    clearHint() {
+        $('#hint-display').empty();
     }
     
     showMessage(message, type = 'info') {

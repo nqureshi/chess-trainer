@@ -258,5 +258,61 @@ def undo_move(game_id):
             'error': str(e)
         }), 500
 
+@app.route('/api/hint/<game_id>')
+def get_hint(game_id):
+    """Get the best move and analysis for the current position."""
+    try:
+        if game_id not in session:
+            return jsonify({
+                'success': False,
+                'error': 'Invalid game session'
+            }), 400
+        
+        game_state = session[game_id]
+        engine = get_engine()
+        current_fen = game_state['current_fen']
+        
+        # Get best move
+        best_move_uci = engine.get_best_move(current_fen)
+        if not best_move_uci:
+            return jsonify({
+                'success': False,
+                'error': 'No legal moves available'
+            }), 400
+        
+        # Convert UCI to SAN notation for display
+        try:
+            import chess
+            board = chess.Board(current_fen)
+            move = chess.Move.from_uci(best_move_uci)
+            board.push(move)
+            move_san = board.san(move)
+            board.pop()  # Undo the move
+            
+            # Get position after best move
+            new_fen = engine.make_move(current_fen, best_move_uci)
+            evaluation_after = engine.evaluate_position(new_fen) if new_fen else None
+            
+        except:
+            move_san = best_move_uci
+            evaluation_after = None
+        
+        # Get current evaluation
+        current_evaluation = engine.evaluate_position(current_fen)
+        
+        return jsonify({
+            'success': True,
+            'best_move_uci': best_move_uci,
+            'best_move_san': move_san,
+            'current_evaluation': current_evaluation,
+            'evaluation_after_move': evaluation_after,
+            'current_fen': current_fen
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)

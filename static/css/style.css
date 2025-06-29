@@ -117,6 +117,14 @@ button:disabled {
     background-color: #e67e22;
 }
 
+#hint-btn {
+    background-color: #9b59b6;
+}
+
+#hint-btn:hover:not(:disabled) {
+    background-color: #8e44ad;
+}
+
 .game-area {
     display: grid;
     grid-template-columns: 1fr 500px 1fr;
@@ -210,6 +218,15 @@ button:disabled {
 #evaluation-display {
     margin-bottom: 15px;
     font-family: monospace;
+    font-size: 14px;
+}
+
+#hint-display {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-left: 4px solid #9b59b6;
+    border-radius: 4px;
     font-size: 14px;
 }
 
