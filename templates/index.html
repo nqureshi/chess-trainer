@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Endgame Kata Trainer</title>
+    <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Chess Endgame Kata Trainer</h1>
+            <p>Master fundamental endgame positions through repetitive practice</p>
+        </header>
+
+        <div class="game-controls">
+            <div class="position-selector">
+                <label for="position-select">Choose Endgame:</label>
+                <select id="position-select">
+                    <option value="">Select a position...</option>
+                </select>
+                <button id="start-btn" disabled>Start Position</button>
+            </div>
+            
+            <div class="game-actions">
+                <button id="reset-btn" disabled>Reset Position</button>
+                <button id="evaluate-btn" disabled>Evaluate</button>
+            </div>
+        </div>
+
+        <div class="game-area">
+            <div class="position-info">
+                <h3 id="position-name"></h3>
+                <p id="position-description"></p>
+                <p id="position-goal"></p>
+                <div id="turn-indicator"></div>
+            </div>
+
+            <div class="board-container">
+                <div id="chess-board"></div>
+            </div>
+
+            <div class="game-status">
+                <div id="status-messages"></div>
+                <div id="evaluation-display"></div>
+                <div id="game-result"></div>
+            </div>
+        </div>
+
+        <div class="instructions">
+            <h3>How to Play</h3>
+            <ul>
+                <li>Select an endgame position from the dropdown</li>
+                <li>Click pieces to make moves</li>
+                <li>The computer will respond with perfect play</li>
+                <li>Practice until the technique becomes automatic</li>
+                <li>Reset to try the position again</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+    <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
+    <script src="{{ url_for('static', filename='js/game.js') }}"></script>
+</body>
+</html>

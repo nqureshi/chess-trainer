@@ -1,0 +1,297 @@
+/* Chess Endgame Kata Trainer Styles */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+header h1 {
+    color: #2c3e50;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+}
+
+header p {
+    color: #7f8c8d;
+    font-size: 1.2em;
+}
+
+.game-controls {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.position-selector {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.position-selector label {
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+.position-selector select {
+    padding: 8px 12px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    min-width: 200px;
+}
+
+.game-actions {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: background-color 0.3s;
+}
+
+button:hover:not(:disabled) {
+    background-color: #2980b9;
+}
+
+button:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+}
+
+#start-btn {
+    background-color: #27ae60;
+}
+
+#start-btn:hover:not(:disabled) {
+    background-color: #229954;
+}
+
+#reset-btn {
+    background-color: #e74c3c;
+}
+
+#reset-btn:hover:not(:disabled) {
+    background-color: #c0392b;
+}
+
+.game-area {
+    display: grid;
+    grid-template-columns: 1fr 500px 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+.position-info {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.position-info h3 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+    font-size: 1.4em;
+}
+
+.position-info p {
+    margin-bottom: 10px;
+    color: #555;
+}
+
+#turn-indicator {
+    padding: 10px;
+    border-radius: 4px;
+    font-weight: 600;
+    text-align: center;
+    margin-top: 15px;
+}
+
+.turn-white {
+    background-color: #ecf0f1;
+    color: #2c3e50;
+}
+
+.turn-black {
+    background-color: #34495e;
+    color: white;
+}
+
+.board-container {
+    display: flex;
+    justify-content: center;
+}
+
+#chess-board {
+    width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.game-status {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+#status-messages {
+    min-height: 20px;
+    margin-bottom: 15px;
+}
+
+.status-message {
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.status-success {
+    background-color: #d5edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.status-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.status-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
+
+#evaluation-display {
+    margin-bottom: 15px;
+    font-family: monospace;
+    font-size: 14px;
+}
+
+#game-result {
+    font-size: 1.2em;
+    font-weight: 600;
+    text-align: center;
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.result-win {
+    background-color: #d5edda;
+    color: #155724;
+}
+
+.result-loss {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.result-draw {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.instructions {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-top: 20px;
+}
+
+.instructions h3 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+
+.instructions ul {
+    list-style-position: inside;
+    color: #555;
+}
+
+.instructions li {
+    margin-bottom: 8px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+    
+    .game-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .position-selector {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+    
+    .position-selector select {
+        min-width: auto;
+    }
+    
+    .game-area {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    #chess-board {
+        width: 100%;
+        max-width: 400px;
+    }
+    
+    header h1 {
+        font-size: 2em;
+    }
+}
+
+/* Chess.js board styling overrides */
+.highlight-white {
+    box-shadow: inset 0 0 3px 3px yellow;
+}
+
+.highlight-black {
+    box-shadow: inset 0 0 3px 3px blue;
+}
