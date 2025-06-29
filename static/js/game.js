@@ -141,6 +141,7 @@ class EndgameTrainer {
                 this.updateTurnIndicator();
                 this.enableGameControls();
                 this.showMessage('Position started! Make your move.', 'success');
+                this.evaluatePosition(); // Auto-evaluate starting position
                 
                 $('#game-result').empty();
             } else {
@@ -189,6 +190,7 @@ class EndgameTrainer {
                     this.handleGameOver(data.result);
                 } else {
                     this.updateTurnIndicator();
+                    this.evaluatePosition(); // Auto-evaluate after each move
                 }
             } else {
                 // Undo the move
@@ -214,6 +216,7 @@ class EndgameTrainer {
                 this.board.position(data.current_fen);
                 this.updateTurnIndicator();
                 this.showMessage('Position reset!', 'success');
+                this.evaluatePosition(); // Auto-evaluate after reset
                 $('#game-result').empty();
             } else {
                 this.showMessage('Failed to reset: ' + data.error, 'error');
