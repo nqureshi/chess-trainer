@@ -109,6 +109,14 @@ button:disabled {
     background-color: #c0392b;
 }
 
+#undo-btn {
+    background-color: #f39c12;
+}
+
+#undo-btn:hover:not(:disabled) {
+    background-color: #e67e22;
+}
+
 .game-area {
     display: grid;
     grid-template-columns: 1fr 500px 1fr;

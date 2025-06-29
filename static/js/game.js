@@ -31,6 +31,12 @@ class EndgameTrainer {
             }
         });
         
+        $('#undo-btn').on('click', () => {
+            if (this.currentGameId) {
+                this.undoMove();
+            }
+        });
+        
         $('#reset-btn').on('click', () => {
             if (this.currentGameId) {
                 this.resetGame();
@@ -226,6 +232,26 @@ class EndgameTrainer {
         }
     }
     
+    async undoMove() {
+        try {
+            const response = await fetch(`/api/undo/${this.currentGameId}`);
+            const data = await response.json();
+            
+            if (data.success) {
+                this.game.load(data.current_fen);
+                this.board.position(data.current_fen);
+                this.updateTurnIndicator();
+                this.evaluatePosition(); // Auto-evaluate after undo
+                this.showMessage('Move undone!', 'success');
+                $('#game-result').empty();
+            } else {
+                this.showMessage('Cannot undo: ' + data.error, 'error');
+            }
+        } catch (error) {
+            this.showMessage('Error undoing move: ' + error.message, 'error');
+        }
+    }
+    
     async evaluatePosition() {
         try {
             const response = await fetch(`/api/evaluate/${this.currentGameId}`);
@@ -259,11 +285,11 @@ class EndgameTrainer {
     }
     
     enableGameControls() {
-        $('#reset-btn, #evaluate-btn').prop('disabled', false);
+        $('#undo-btn, #reset-btn, #evaluate-btn').prop('disabled', false);
     }
     
     disableGameControls() {
-        $('#reset-btn, #evaluate-btn').prop('disabled', true);
+        $('#undo-btn, #reset-btn, #evaluate-btn').prop('disabled', true);
     }
     
     handleGameOver(result) {

@@ -209,5 +209,54 @@ def evaluate_position(game_id):
             'error': str(e)
         }), 500
 
+@app.route('/api/undo/<game_id>')
+def undo_move(game_id):
+    """Undo the last move (both user and computer moves)."""
+    try:
+        if game_id not in session:
+            return jsonify({
+                'success': False,
+                'error': 'Invalid game session'
+            }), 400
+        
+        game_state = session[game_id]
+        
+        # Need at least 2 moves to undo (user + computer)
+        if len(game_state['moves']) < 2:
+            return jsonify({
+                'success': False,
+                'error': 'No moves to undo'
+            }), 400
+        
+        # Remove last 2 moves (computer move and user move)
+        game_state['moves'] = game_state['moves'][:-2]
+        
+        # Rebuild position from scratch
+        engine = get_engine()
+        current_fen = game_state['starting_fen']
+        
+        # Replay all remaining moves
+        for move in game_state['moves']:
+            current_fen = engine.make_move(current_fen, move)
+            if not current_fen:
+                # If move reconstruction fails, reset to starting position
+                current_fen = game_state['starting_fen']
+                game_state['moves'] = []
+                break
+        
+        game_state['current_fen'] = current_fen
+        session[game_id] = game_state
+        
+        return jsonify({
+            'success': True,
+            'current_fen': current_fen,
+            'moves_remaining': len(game_state['moves'])
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
