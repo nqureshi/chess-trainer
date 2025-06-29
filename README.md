@@ -18,12 +18,25 @@ A web-based chess training application focused on drilling fundamental endgame p
 
 1. **Clone or download this repository**
 
-2. **Install Python dependencies:**
+2. **Create and activate a virtual environment:**
+   ```bash
+   # Create virtual environment
+   python3 -m venv venv
+   
+   # Activate virtual environment
+   # On macOS/Linux:
+   source venv/bin/activate
+   
+   # On Windows:
+   # venv\Scripts\activate
+   ```
+
+3. **Install Python dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
 
-3. **Install Stockfish:**
+4. **Install Stockfish:**
    
    **macOS (using Homebrew):**
    ```bash
@@ -41,23 +54,33 @@ A web-based chess training application focused on drilling fundamental endgame p
 
 ## Usage
 
-1. **Start the application:**
+1. **Activate the virtual environment (if not already active):**
+   ```bash
+   # On macOS/Linux:
+   source venv/bin/activate
+   
+   # On Windows:
+   # venv\Scripts\activate
+   ```
+
+2. **Start the application:**
    ```bash
    python app.py
    ```
 
-2. **Open your browser and go to:**
+3. **Open your browser and go to:**
    ```
    http://localhost:5000
    ```
 
-3. **How to play:**
+4. **How to play:**
    - Select an endgame position from the dropdown
    - Click "Start Position" to begin
    - Make moves by dragging pieces
    - The computer will respond with perfect play
-   - Use "Reset Position" to practice again
-   - Use "Evaluate" to see engine analysis
+   - Use "Show Hint" to see the best move
+   - Use "Undo Move" to take back your last move
+   - Use "Reset Position" to start over
 
 ## Troubleshooting
 
