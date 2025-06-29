@@ -43,11 +43,6 @@ class EndgameTrainer {
             }
         });
         
-        $('#evaluate-btn').on('click', () => {
-            if (this.currentGameId) {
-                this.evaluatePosition();
-            }
-        });
     }
     
     async loadPositions() {
@@ -285,11 +280,11 @@ class EndgameTrainer {
     }
     
     enableGameControls() {
-        $('#undo-btn, #reset-btn, #evaluate-btn').prop('disabled', false);
+        $('#undo-btn, #reset-btn').prop('disabled', false);
     }
     
     disableGameControls() {
-        $('#undo-btn, #reset-btn, #evaluate-btn').prop('disabled', true);
+        $('#undo-btn, #reset-btn').prop('disabled', true);
     }
     
     handleGameOver(result) {
