@@ -21,6 +21,13 @@ ENDGAME_POSITIONS = {
         'fen': '8/4k3/8/8/3KP3/8/8/8 w - - 0 1',
         'goal': 'Win by using opposition to advance the pawn to promotion',
         'user_plays': 'white'
+    },
+    'vancura': {
+        'name': 'Vancura Position',
+        'description': 'Rook + a-pawn vs Rook - drawing technique with lateral defense',
+        'fen': 'R7/5k2/P7/8/8/8/6K1/r7 b - - 0 1',
+        'goal': 'Draw by maintaining lateral rook defense to prevent pawn advance',
+        'user_plays': 'black'
     }
 }
 
