@@ -51,7 +51,8 @@ def start_position(position_type):
                 'error': 'Invalid position type'
             }), 400
         
-        # Create new game session
+        # Clear previous session data and create new game session
+        session.clear()
         game_id = str(uuid.uuid4())
         session[game_id] = {
             'position_type': position_type,
